@@ -44,6 +44,7 @@ namespace DecimalToBinaryConverter.Tests
             //Assert
             Assert.AreEqual(1, ConversionResults[0]);
             Assert.AreEqual(1, ConversionResults[1]);
+            Assert.AreEqual(2, ConversionResults.Count);
         }
     }
 }
