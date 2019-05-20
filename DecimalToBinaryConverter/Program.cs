@@ -11,6 +11,11 @@ namespace DecimalToBinaryConverter
         public decimal userNumber { get; set; }
         public int integerPortionOfUserNumber { get; set; }
         public decimal fractionalPortionOfUserNumber { get; set; }
+        public int IntegerPortionOfUserNumberConvertedToBinary { get; set; }
+        //public List<int> ListOfDivisionResults = new List<int>();
+
+        public List<int> ListOfResultsFromConvertIntegerPortionToBinary = new List<int>();
+        public List<int> ListOfResultsFromConvertFractionalPortionToBinary = new List<int>();
 
         static void Main(string[] args)
         {
@@ -28,15 +33,27 @@ namespace DecimalToBinaryConverter
 
         public void ConvertIntegerPortionOfUserNumberToBinary()
         {
-            List<int> ConversionResults = new List<int>();
-
             do
             {
-                ConversionResults.Insert(0, integerPortionOfUserNumber % 2);
+                ListOfResultsFromConvertIntegerPortionToBinary.Insert(0, integerPortionOfUserNumber % 2);
                 integerPortionOfUserNumber /= 2;
             } while (integerPortionOfUserNumber != 0);
-            //TODO: This should be all you need for the integer portion of the conversion, but go back over it before continuing
+
+            AppendListOfIntsIntoASingleValue(ListOfResultsFromConvertIntegerPortionToBinary);
+        }
+
+        public int AppendListOfIntsIntoASingleValue(List<int> ListOfDivisionResults)
+        {
+            string AppendationOfListElements = "";
+
+            for (int i = 0; i < ListOfDivisionResults.Count; i++)
+            {
+                AppendationOfListElements += $"{ListOfDivisionResults[i]}";
+            }
+
+            return Convert.ToInt32(AppendationOfListElements);
         }
         //TODO: Add method for ConvertFractionalPortionOfUserNumberToBinary
+
     }
 }

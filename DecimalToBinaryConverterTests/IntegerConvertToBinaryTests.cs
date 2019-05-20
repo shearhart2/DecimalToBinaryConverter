@@ -31,20 +31,43 @@ namespace DecimalToBinaryConverter.Tests
         {
             //Arrange
             IntegerConvertToBinary integerConvertToBinary = new IntegerConvertToBinary();
-            List<int> ConversionResults = new List<int>();
+            List<int> ListOfDivisionResults = new List<int>();
             integerConvertToBinary.integerPortionOfUserNumber = 3;
+            string AppendationOfListElements = "";
 
             //Act
             do
             {
-                ConversionResults.Insert(0, integerConvertToBinary.integerPortionOfUserNumber % 2);
+                ListOfDivisionResults.Insert(0, integerConvertToBinary.integerPortionOfUserNumber % 2);
                 integerConvertToBinary.integerPortionOfUserNumber /= 2;
             } while (integerConvertToBinary.integerPortionOfUserNumber != 0);
 
+            
             //Assert
-            Assert.AreEqual(1, ConversionResults[0]);
-            Assert.AreEqual(1, ConversionResults[1]);
-            Assert.AreEqual(2, ConversionResults.Count);
+            Assert.AreEqual(1, ListOfDivisionResults[0]);
+            Assert.AreEqual(1, ListOfDivisionResults[1]);
+            Assert.AreEqual(2, ListOfDivisionResults.Count);
+        }
+
+        [TestMethod()]
+        public void AppendListOfIntsIntoASingleValueTest()
+        {
+            //Arrange
+            List<int> ListOfDivisionResults = new List<int>() { 1, 1, 2 };
+            string AppendationOfListElements = "";
+
+            //Act
+            
+            for (int i = 0; i < ListOfDivisionResults.Count; i++)
+            {
+                AppendationOfListElements += $"{ListOfDivisionResults[i]}";
+            }
+
+            int thisWouldBeTheReturnVariable = Convert.ToInt32(AppendationOfListElements);
+
+            //Assert
+            Assert.AreEqual("112", AppendationOfListElements);
+            Assert.AreEqual(112, thisWouldBeTheReturnVariable);
         }
     }
 }
