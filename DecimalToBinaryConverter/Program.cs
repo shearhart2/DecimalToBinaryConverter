@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DecimalToBinaryConverter
 {
-    class IntegerConvertToBinary
+    public class IntegerConvertToBinary
     {
         public decimal userNumber { get; set; }
         public int integerPortionOfUserNumber { get; set; }
@@ -20,13 +20,13 @@ namespace DecimalToBinaryConverter
             //TODO: write a method of catching inappropriate input
         }
         
-        void SeparateIntegerAndFractionalPortionsOfUserNumber()
+        public void SeparateIntegerAndFractionalPortionsOfUserNumber()
         {
             integerPortionOfUserNumber = (int)userNumber;
             fractionalPortionOfUserNumber = userNumber - integerPortionOfUserNumber;
         }
 
-        void ConvertIntegerPortionOfUserNumberToBinary()
+        public void ConvertIntegerPortionOfUserNumberToBinary()
         {
             List<int> ConversionResults = new List<int>();
 
