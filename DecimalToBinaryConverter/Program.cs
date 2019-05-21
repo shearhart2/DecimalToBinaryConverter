@@ -6,43 +6,77 @@ using System.Threading.Tasks;
 
 namespace DecimalToBinaryConverter
 {
-    public class IntegerConvertToBinary
+    public class DecimalConvertToBinary
     {
-        public decimal userNumber { get; set; }
-        public int integerPortionOfUserNumber { get; set; }
-        public decimal fractionalPortionOfUserNumber { get; set; }
-        public int IntegerPortionOfUserNumberConvertedToBinary { get; set; }
-        //public List<int> ListOfDivisionResults = new List<int>();
+        public decimal UserNumber { get; set; }
+        public int IntegerPortionOfUserNumber { get; set; }
+        public decimal FractionalPortionOfUserNumber { get; set; }
+        public string IntegerPortionOfUserNumberConvertedToBinaryString { get; set; }
+        public string FractionalPortionOfUserNumberConvertedToBinaryString { get; set; }
 
         public List<int> ListOfResultsFromConvertIntegerPortionToBinary = new List<int>();
         public List<int> ListOfResultsFromConvertFractionalPortionToBinary = new List<int>();
 
         static void Main(string[] args)
         {
-            IntegerConvertToBinary integerConvertToBinary = new IntegerConvertToBinary();
+            DecimalConvertToBinary decimalConvertToBinary = new DecimalConvertToBinary();
             Console.WriteLine("Please enter a decimal to convert it to binary");
-            integerConvertToBinary.userNumber = Convert.ToDecimal(Console.ReadLine());
+            decimalConvertToBinary.UserNumber = Convert.ToDecimal(Console.ReadLine());
             //TODO: write a method of catching inappropriate input
+            decimalConvertToBinary.SeparateIntegerAndFractionalPortionsOfUserNumber();
+            decimalConvertToBinary.ConvertIntegerPortionOfUserNumberToBinary();
+            decimalConvertToBinary.ConvertFractionalPortionOfUserNumberToBinary();
+            decimalConvertToBinary.CombineIntegerAndFractionalResultsIntoASingleBinaryNumber();
         }
         
         public void SeparateIntegerAndFractionalPortionsOfUserNumber()
         {
-            integerPortionOfUserNumber = (int)userNumber;
-            fractionalPortionOfUserNumber = userNumber - integerPortionOfUserNumber;
+            IntegerPortionOfUserNumber = (int)UserNumber;
+            FractionalPortionOfUserNumber = UserNumber - IntegerPortionOfUserNumber;
         }
 
         public void ConvertIntegerPortionOfUserNumberToBinary()
         {
             do
             {
-                ListOfResultsFromConvertIntegerPortionToBinary.Insert(0, integerPortionOfUserNumber % 2);
-                integerPortionOfUserNumber /= 2;
-            } while (integerPortionOfUserNumber != 0);
+                ListOfResultsFromConvertIntegerPortionToBinary.Insert(0, IntegerPortionOfUserNumber % 2);
+                IntegerPortionOfUserNumber /= 2;
+            } while (IntegerPortionOfUserNumber != 0);
 
-            AppendListOfIntsIntoASingleValue(ListOfResultsFromConvertIntegerPortionToBinary);
+            IntegerPortionOfUserNumberConvertedToBinaryString = AppendListOfIntsIntoASingleValue(ListOfResultsFromConvertIntegerPortionToBinary);
         }
 
-        public int AppendListOfIntsIntoASingleValue(List<int> ListOfDivisionResults)
+        public void ConvertFractionalPortionOfUserNumberToBinary()
+        {
+            List<decimal> PreviousValuesOfFractionalPortionOfUserNumber = new List<decimal>();
+            
+            do
+            {
+                FractionalPortionOfUserNumber = decimal.Multiply(FractionalPortionOfUserNumber, 2M);
+
+                if (PreviousValuesOfFractionalPortionOfUserNumber.Contains(FractionalPortionOfUserNumber))
+                {
+                    break;
+                }
+                else if(FractionalPortionOfUserNumber >= 1M)
+                {
+                    ListOfResultsFromConvertFractionalPortionToBinary.Add(1);
+                    FractionalPortionOfUserNumber -= 1M;
+                }
+                else
+                {
+                    ListOfResultsFromConvertFractionalPortionToBinary.Add(0);
+                }
+
+                PreviousValuesOfFractionalPortionOfUserNumber.Add(FractionalPortionOfUserNumber);
+
+            } while (true);
+
+            
+            FractionalPortionOfUserNumberConvertedToBinaryString = AppendListOfIntsIntoASingleValue(ListOfResultsFromConvertFractionalPortionToBinary);
+        }
+
+        public string AppendListOfIntsIntoASingleValue(List<int> ListOfDivisionResults)
         {
             string AppendationOfListElements = "";
 
@@ -51,9 +85,14 @@ namespace DecimalToBinaryConverter
                 AppendationOfListElements += $"{ListOfDivisionResults[i]}";
             }
 
-            return Convert.ToInt32(AppendationOfListElements);
+            return AppendationOfListElements;
         }
-        //TODO: Add method for ConvertFractionalPortionOfUserNumberToBinary
 
+        public void CombineIntegerAndFractionalResultsIntoASingleBinaryNumber()
+        {
+            string AppendationOfIntegerAndFraction = $"{IntegerPortionOfUserNumberConvertedToBinaryString}.{FractionalPortionOfUserNumberConvertedToBinaryString}";
+            decimal FinalBinaryNumber = Convert.ToDecimal(AppendationOfIntegerAndFraction);
+            Console.WriteLine(FinalBinaryNumber);
+        }
     }
 }

@@ -16,37 +16,74 @@ namespace DecimalToBinaryConverter.Tests
         public void SeparateIntegerAndFractionalPortionsOfUserNumberTest()
         {
             //Arrange
-            IntegerConvertToBinary integerConvertToBinary = new IntegerConvertToBinary();
-            integerConvertToBinary.userNumber = 3.1415M;
+            DecimalConvertToBinary decimalConvertToBinary = new DecimalConvertToBinary();
+            decimalConvertToBinary.UserNumber = 3.1415M;
             //Act
-            integerConvertToBinary.integerPortionOfUserNumber = (int)integerConvertToBinary.userNumber;
-            integerConvertToBinary.fractionalPortionOfUserNumber = integerConvertToBinary.userNumber - integerConvertToBinary.integerPortionOfUserNumber;
+            decimalConvertToBinary.IntegerPortionOfUserNumber = (int)decimalConvertToBinary.UserNumber;
+            decimalConvertToBinary.FractionalPortionOfUserNumber = decimalConvertToBinary.UserNumber - decimalConvertToBinary.IntegerPortionOfUserNumber;
             //Assert
-            Assert.AreEqual(3, integerConvertToBinary.integerPortionOfUserNumber);
-            Assert.AreEqual(.1415M, integerConvertToBinary.fractionalPortionOfUserNumber);
+            Assert.AreEqual(3, decimalConvertToBinary.IntegerPortionOfUserNumber);
+            Assert.AreEqual(.1415M, decimalConvertToBinary.FractionalPortionOfUserNumber);
         }
 
         [TestMethod()]
         public void ConvertIntegerPortionOfUserNumberToBinaryTest()
         {
             //Arrange
-            IntegerConvertToBinary integerConvertToBinary = new IntegerConvertToBinary();
+            DecimalConvertToBinary decimalConvertToBinary = new DecimalConvertToBinary();
             List<int> ListOfDivisionResults = new List<int>();
-            integerConvertToBinary.integerPortionOfUserNumber = 3;
-            string AppendationOfListElements = "";
-
+            decimalConvertToBinary.IntegerPortionOfUserNumber = 3;
             //Act
             do
             {
-                ListOfDivisionResults.Insert(0, integerConvertToBinary.integerPortionOfUserNumber % 2);
-                integerConvertToBinary.integerPortionOfUserNumber /= 2;
-            } while (integerConvertToBinary.integerPortionOfUserNumber != 0);
+                ListOfDivisionResults.Insert(0, decimalConvertToBinary.IntegerPortionOfUserNumber % 2);
+                decimalConvertToBinary.IntegerPortionOfUserNumber /= 2;
+            } while (decimalConvertToBinary.IntegerPortionOfUserNumber != 0);
 
-            
+
             //Assert
             Assert.AreEqual(1, ListOfDivisionResults[0]);
             Assert.AreEqual(1, ListOfDivisionResults[1]);
             Assert.AreEqual(2, ListOfDivisionResults.Count);
+        }
+
+
+        [TestMethod()]
+        public void ConvertFractionalPortionOfUserNumberToBinaryTest()
+        {
+            //Arrange
+            DecimalConvertToBinary integerConvertToBinary = new DecimalConvertToBinary();
+            decimal FractionalPortionOfUserNumber = .14M;
+            List<int> ListOfResultsFromConvertFractionalPortionToBinary = new List<int>();
+            List<decimal> PreviousValuesOfFractionalPortionOfUserNumber = new List<decimal>();
+
+            //Act
+            do
+            {
+                FractionalPortionOfUserNumber = decimal.Multiply(FractionalPortionOfUserNumber, 2M);
+
+                if (PreviousValuesOfFractionalPortionOfUserNumber.Contains(FractionalPortionOfUserNumber))
+                {
+                    break;
+                }
+                else if (FractionalPortionOfUserNumber >= 1M)
+                {
+                    ListOfResultsFromConvertFractionalPortionToBinary.Add(1);
+                    FractionalPortionOfUserNumber -= 1M;
+                }
+                else
+                {
+                    ListOfResultsFromConvertFractionalPortionToBinary.Add(0);
+                }
+                PreviousValuesOfFractionalPortionOfUserNumber.Add(FractionalPortionOfUserNumber);
+            } while (true);
+
+            //Assert
+            Assert.AreEqual(0, ListOfResultsFromConvertFractionalPortionToBinary[0]);
+            Assert.AreEqual(0, ListOfResultsFromConvertFractionalPortionToBinary[1]);
+            Assert.AreEqual(1, ListOfResultsFromConvertFractionalPortionToBinary[2]);
+            Assert.AreEqual(1, ListOfResultsFromConvertFractionalPortionToBinary[11]);
+            Assert.AreEqual(21, ListOfResultsFromConvertFractionalPortionToBinary.Count);
         }
 
         [TestMethod()]
@@ -57,17 +94,29 @@ namespace DecimalToBinaryConverter.Tests
             string AppendationOfListElements = "";
 
             //Act
-            
+
             for (int i = 0; i < ListOfDivisionResults.Count; i++)
             {
                 AppendationOfListElements += $"{ListOfDivisionResults[i]}";
             }
-
-            int thisWouldBeTheReturnVariable = Convert.ToInt32(AppendationOfListElements);
-
             //Assert
             Assert.AreEqual("112", AppendationOfListElements);
-            Assert.AreEqual(112, thisWouldBeTheReturnVariable);
+        }
+
+        [TestMethod()]
+
+        public void CombineIntegerAndFractionalResultsIntoASingleBinaryNumber()
+        {
+            //Arrange
+            string integer = "11";
+            string fraction = "001000111101011100001";
+            //Act
+            string AppendationOfIntegerAndFraction = $"{integer}.{fraction}";
+            decimal FinalBinaryNumber = Convert.ToDecimal(AppendationOfIntegerAndFraction);
+
+            //Assert
+            Assert.AreEqual("11.001000111101011100001", AppendationOfIntegerAndFraction);
+            Assert.AreEqual(11.001000111101011100001M, FinalBinaryNumber);
         }
     }
 }
