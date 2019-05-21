@@ -47,7 +47,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="IntegerConvertToBinaryTests.cs" />
+    <Compile Include="DecimalToBinaryConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

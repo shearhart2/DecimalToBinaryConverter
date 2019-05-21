@@ -10,7 +10,7 @@ using Moq;
 namespace DecimalToBinaryConverter.Tests
 {
     [TestClass()]
-    public class IntegerConvertToBinaryTests
+    public class DecimalConvertToBinaryTests
     {
         [TestMethod()]
         public void SeparateIntegerAndFractionalPortionsOfUserNumberTest()
