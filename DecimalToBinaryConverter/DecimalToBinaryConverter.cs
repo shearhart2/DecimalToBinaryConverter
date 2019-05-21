@@ -17,18 +17,37 @@ namespace DecimalToBinaryConverter
         public List<int> ListOfResultsFromConvertIntegerPortionToBinary = new List<int>();
         public List<int> ListOfResultsFromConvertFractionalPortionToBinary = new List<int>();
 
-        static void Main(string[] args)
+        public bool userInputValid;
+
+        static void Main()
         {
             DecimalConvertToBinary decimalConvertToBinary = new DecimalConvertToBinary();
-            Console.WriteLine("Please enter a decimal to convert it to binary");
-            decimalConvertToBinary.UserNumber = Convert.ToDecimal(Console.ReadLine());
-            //TODO: write a method of catching inappropriate input
+
+            do
+            {
+                Console.WriteLine("Please enter a decimal to convert it to binary\n");
+                decimalConvertToBinary.CheckUserInputForValidity(Console.ReadLine());
+            } while (!decimalConvertToBinary.userInputValid);
             decimalConvertToBinary.SeparateIntegerAndFractionalPortionsOfUserNumber();
             decimalConvertToBinary.ConvertIntegerPortionOfUserNumberToBinary();
             decimalConvertToBinary.ConvertFractionalPortionOfUserNumberToBinary();
             decimalConvertToBinary.CombineIntegerAndFractionalResultsIntoASingleBinaryNumber();
         }
         
+        public void CheckUserInputForValidity(string userInput)
+        {
+            try
+            {
+                UserNumber = decimal.Parse(userInput);
+                userInputValid = true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Your input was not valid\n");
+                userInputValid = false;
+            }
+        }
+
         public void SeparateIntegerAndFractionalPortionsOfUserNumber()
         {
             IntegerPortionOfUserNumber = (int)UserNumber;

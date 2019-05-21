@@ -12,6 +12,31 @@ namespace DecimalToBinaryConverter.Tests
     [TestClass()]
     public class DecimalConvertToBinaryTests
     {
+        //[TestMethod()]
+        //public void CheckUserInputForValidityTest(string userInput)
+        //{
+        //    //Arrange
+        //    DecimalConvertToBinary decimalConvertToBinary = new DecimalConvertToBinary();
+        //    string validUserInput = "3.14";
+        //    string invalidUserInput = "This is not valid";
+        //    bool userInputValid;
+        //    //Act
+        //    try
+        //    {
+        //        decimalConvertToBinary.UserNumber = decimal.Parse(userInput);
+        //        userInputValid = true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Console.WriteLine("Your input was not valid\n");
+        //        userInputValid = false;
+        //    }
+
+        //    //Assert
+        //    //TODO: FINISH THIS UNIT TEST
+
+        //}
+
         [TestMethod()]
         public void SeparateIntegerAndFractionalPortionsOfUserNumberTest()
         {
